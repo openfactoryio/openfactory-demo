@@ -53,8 +53,9 @@ set +a
 docker rm -f factory-manager
 
 # Shutdown virtual sensors
-docker rm -f virtual-opcua-sensor-4840
-docker rm -f virtual-opcua-sensor-4841
+docker rm -f virtual-temp-controller
+docker rm -f virtual-dht-sensor-4841
+docker rm -f virtual-dht-sensor-4842
 
 # Shutdown OPCUA Connector
 docker compose -f platform/docker/opcua-connector/docker-compose.yml down

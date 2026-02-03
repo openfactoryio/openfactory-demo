@@ -97,7 +97,7 @@ docker run --detach \
   ghcr.io/openfactoryio/virtual-opcua-temp-controller:${OPENFACTORY_VERSION}
 
 docker run --detach \
-  --name virtual-dht-sensor-4840 \
+  --name virtual-dht-sensor-4841 \
   --publish 4841:4840 \
   --env NUM_SENSORS=1 \
   --env TEMP_SLEEP_AVG=0.5 \
@@ -105,7 +105,7 @@ docker run --detach \
   ghcr.io/openfactoryio/virtual-opcua-sensor:${OPENFACTORY_VERSION}
 
 docker run --detach \
-  --name virtual-dht-sensor-4841 \
+  --name virtual-dht-sensor-4842 \
   --publish 4842:4840 \
   --env NUM_SENSORS=1 \
   --env TEMP_SLEEP_AVG=1.5 \
