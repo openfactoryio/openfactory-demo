@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------------------
+# 🏭 OpenFactory Asset configuration file for the virtual OPC UA DHT sensor
+# ---------------------------------------------------------------------------------------
+
+devices:
+
+  opcua_sensor:
+    uuid: OPCUA-DHT-SENSOR-001
+
+    uns:
+      inc: Demofactory
+      area: Machining
+      workcenter: WC001
+      asset: dht-sensor
+
+    connector:
+      type: opcua
+
+      server:
+        uri: opc.tcp://${HOST_IP}:4841
+
+      variables:
+        temp:
+          browse_path: 0:Root/0:Objects/2:Sensors/2:TemperatureSensor1/2:Temperature
+          tag: Temperature
+        hum:
+          browse_path: 0:Root/0:Objects/2:Sensors/2:TemperatureSensor1/2:Humidity
+          tag: Humidity
+        temp_unit:
+          browse_path: 0:Root/0:Objects/2:Sensors/2:TemperatureSensor1/2:TemperatureUnit
+          tag: TemperatureUnit
+          access_level: rw
+        sensor_model: 
+          browse_path: 0:Root/0:Objects/2:Sensors/2:TemperatureSensor1/2:SensorModel
+          tag: SensorModel
+
+      events:
+        sensor_events:
+          browse_path: 0:Root/0:Objects/2:Sensors/2:TemperatureSensor1

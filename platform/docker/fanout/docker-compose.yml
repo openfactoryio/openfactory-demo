@@ -1,0 +1,68 @@
+# ---------------------------------------------------------------------------------------
+# 🐳 Docker Compose file for OpenFactory Fan-out Layer
+# ---------------------------------------------------------------------------------------
+#
+# This file defines the services required to run the OpenFactory Fan-out Layer stack:
+# 1. asset-forwarder   - Streams asset data to Kafka and NATS (scalable service)
+# 2. asset-router      - Provides deterministic routing of asset IDs to NATS clusters
+# 3. nats              - Provides lightweight messaging backbone for coordination
+#
+# All services are connected through the 'factory-net' Docker network.
+#
+# ---------------------------------------------------------------------------------------
+# Environment variables:
+#
+# Required:
+#   VERSION                     Version of the OpenFactory platform
+#   KAFKA_BROKER                Kafka bootstrap server
+#   NATS_CLUSTER_C1             NATS cluster URL
+#
+# Optional:
+#   ASSET_FORWARDER_LOG_LEVEL   Log level (default: INFO)
+#   ASSET_FORWARDER_CONCURRENCY Number of async workers (default: 20)
+#
+# ---------------------------------------------------------------------------------------
+# Ports:
+#   asset-router: 8002
+#   NATS: 4222
+#
+# ---------------------------------------------------------------------------------------
+# External network required:
+#   factory-net
+# ---------------------------------------------------------------------------------------
+
+services:
+  asset-forwarder:
+    image: ghcr.io/openfactoryio/asset-forwarder:${OPENFACTORY_VERSION}
+    container_name: asset-forwarder
+    environment:
+      - KAFKA_BROKER=${KAFKA_BROKER}
+      - NATS_CLUSTER_C1=nats://nats:4222
+      - ASSET_FORWARDER_LOG_LEVEL=${ASSET_FORWARDER_LOG_LEVEL:-INFO}
+      - ASSET_FORWARDER_CONCURRENCY=${ASSET_FORWARDER_CONCURRENCY:-20}
+      - NODE_HOSTNAME={{.Node.Hostname}}
+      - TASK_SLOT={{.Task.Slot}}
+    networks:
+      - factory-net
+
+  asset-router:
+    image: ghcr.io/openfactoryio/asset-router:${OPENFACTORY_VERSION}
+    container_name: asset-router
+    environment:
+      - NATS_CLUSTER_C1=${NATS_CLUSTER_C1}
+    ports:
+      - "8002:8002"
+    networks:
+      - factory-net
+
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
+    networks:
+      - factory-net
+
+networks:
+
+    factory-net:
+      external: true

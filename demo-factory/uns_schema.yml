@@ -1,0 +1,13 @@
+# -----------------------------------------------------------------
+# 🏭 OpenFactory Unified Namespace Schema
+# -----------------------------------------------------------------
+
+namespace_structure:
+   - inc: Demofactory
+   - area: ["Machining", "Assembly"]
+   - workcenter: ["WC001", "WC002", "WC003"]
+   - station: ["Station01", "Station02"]
+   - asset: ANY
+   - attribute: ANY
+
+uns_template: 'inc/area/workcenter/station/asset/attribute'
