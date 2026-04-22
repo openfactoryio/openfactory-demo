@@ -52,6 +52,16 @@ source .ofaenv
 [ -f .env ] && source .env
 set +a
 
+# setup factory-net network
+NETWORK_NAME="factory-net"
+echo "⚙️  Setting up $NETWORK_NAME network ..."
+if ! docker network inspect "$NETWORK_NAME" >/dev/null 2>&1; then
+  echo "🖧  Creating network: $NETWORK_NAME"
+  docker network create "$NETWORK_NAME"
+else
+  echo "🖧  Network already exists: $NETWORK_NAME"
+fi
+
 # OpenFactory CLI
 echo "⚙️  Setting up factory-manager ..."
 docker pull ghcr.io/openfactoryio/ofa-cli:${OPENFACTORY_VERSION}

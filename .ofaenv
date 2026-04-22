@@ -1,5 +1,5 @@
 # OpenFactory version
-OPENFACTORY_VERSION=v0.4.9
+OPENFACTORY_VERSION=v0.5.3
 
 # Kafka-cluster
 KAFKA_BROKER=${HOST_IP}:9092

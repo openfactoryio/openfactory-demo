@@ -124,7 +124,7 @@ services:
 networks:
   factory-net:
     name: factory-net
-    #external: true
+    external: true
 
 volumes:
   kafka-data:

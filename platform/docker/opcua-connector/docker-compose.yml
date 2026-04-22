@@ -28,11 +28,13 @@ services:
     image: ghcr.io/openfactoryio/opcua-gateway:${OPENFACTORY_VERSION}
     container_name: opcua-gateway
     environment:
+      - NODE_HOSTNAME={{.Node.Hostname}}
       - COORDINATOR_URL=http://opcua-coordinator:8000
       - KAFKA_BROKER=${KAFKA_BROKER}
       - KSQLDB_URL=${KSQLDB_URL}
       - OPCUA_GATEWAY_LOG_LEVEL=${OPCUA_GATEWAY_LOG_LEVEL:-INFO}
       - KAFKA_LINGER_MS=5
+      - ASSET_ROUTER_URL=${ASSET_ROUTER_URL}
     networks:
       - factory-net
 
@@ -40,8 +42,10 @@ services:
     image: ghcr.io/openfactoryio/opcua-coordinator:${OPENFACTORY_VERSION}
     container_name: opcua-coordinator
     environment:
+      - NODE_HOSTNAME={{.Node.Hostname}}
       - KAFKA_BROKER=${KAFKA_BROKER}
       - KSQLDB_URL=${KSQLDB_URL}
+      - ASSET_ROUTER_URL=${ASSET_ROUTER_URL}
     ports:
       - "8000:8000"
     networks:
